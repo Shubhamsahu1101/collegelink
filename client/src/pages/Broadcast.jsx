@@ -6,7 +6,7 @@ const broadcasts = [
     id: 1,
     sender: 'John Doe',
     subject: 'Meeting Reminder',
-    message: 'Don’t forget the meeting tomorrow at 10 AM in the conference room.',
+    message: 'Don\'t forget the meeting tomorrow at 10 AM in the conference room.',
   },
   {
     id: 2,
@@ -90,16 +90,15 @@ const BroadcastPage = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-74px)] bg-gray-100 flex">
-      <aside className="w-64 bg-white shadow-md py-4 h-full">
-        <nav className="space-y-2 mt-16">
-          <Link to="/teachers-group" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Teacher Group</Link>
-          <Link to="/broadcast" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Broadcast</Link>
-          <Link to="/classroom" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Classroom</Link>
-          <Link to="/quick-access" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Quick Access</Link>
-        </nav>
-      </aside>
-      <div className="flex-1 flex flex-col mx-8 p-6 mt-4">
+    <div className="h-[calc(100vh-70px)] bg-gray-100 flex">
+    <aside className="w-64 bg-white shadow-md h-[calc(100vh-70px)]">
+      <nav className="mt-4">
+        <Link to="/teachers-group" className="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium text-lg">Teachers Group</Link>
+        <Link to="/broadcast" className="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium text-lg">Broadcasts</Link>
+        <Link to="/classroom" className="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium text-lg">Classrooms</Link>
+      </nav>
+    </aside>
+      <div className="flex-1 flex flex-col p-6">
         <h1 className="text-2xl font-bold mb-6">Broadcasts</h1>
         <div className="flex-1 overflow-y-auto space-y-4">
           {broadcasts.map(({ id, sender, subject, message }) => (
