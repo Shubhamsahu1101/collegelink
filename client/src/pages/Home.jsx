@@ -33,7 +33,7 @@ const Home = () => {
             <h2 className="text-2xl font-bold mb-4">Broadcast</h2>
             <div className="p-4 bg-white shadow rounded-lg">
               <p>Latest Broadcast Preview (unread)</p>
-              <button className="mt-2 text-blue-500 hover:underline">View All</button>
+              <Link to="/broadcast" className="mt-2 text-blue-500 hover:underline">View All</Link>
             </div>
           </section>
 

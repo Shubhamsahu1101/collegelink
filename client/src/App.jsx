@@ -9,6 +9,7 @@ import Header from './components/Navbar'
 import { Toaster } from 'react-hot-toast'
 import PrivateRoute from './components/PrivateRoute'
 import TeachersGroup from './pages/TeachersGroup'
+import BroadcastPage from './pages/Broadcast'
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/teachers-group" element={<TeachersGroup />} />
+        <Route path="/broadcast" element={<BroadcastPage />} />
         
         <Route element={<PrivateRoute />} >
           <Route path="/profile" element={<Profile />} />
