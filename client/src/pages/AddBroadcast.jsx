@@ -21,13 +21,13 @@ const AddBroadcastPage = () => {
 
   return (
     <div className="h-[calc(100vh-70px)] bg-gray-100 flex">
-      <aside className="w-64 bg-white shadow-md h-[calc(100vh-70px)]">
-        <nav className="mt-4">
-          <Link to="/teachers-group" className="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium text-lg">Teachers Group</Link>
-          <Link to="/broadcast" className="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium text-lg">Broadcasts</Link>
-          <Link to="/classroom" className="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium text-lg">Classrooms</Link>
-        </nav>
-      </aside>
+    <aside className="w-64 bg-white shadow-md h-[calc(100vh-70px)]">
+      <nav className="mt-4">
+        <Link to="/teachers-group" className="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium text-lg">Teachers Group</Link>
+        <Link to="/broadcast" className="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium text-lg">Broadcasts</Link>
+        <Link to="/all-classrooms" className="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium text-lg">Classrooms</Link>
+      </nav>
+    </aside>
       <div className="flex-1 flex flex-col mx-8 p-6 mt-4">
         <h1 className="text-2xl font-bold mb-6">Add Broadcast</h1>
         <div className="bg-white p-6 rounded-lg shadow-md">

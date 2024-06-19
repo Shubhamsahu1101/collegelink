@@ -11,6 +11,8 @@ import PrivateRoute from './components/PrivateRoute'
 import TeachersGroup from './pages/TeachersGroup'
 import BroadcastPage from './pages/Broadcast'
 import AddBroadcastPage from './pages/AddBroadcast'
+import Classroom from './pages/Classroom'
+import AllClassrooms from './pages/AllClassrooms'
 
 const App = () => {
   return (
@@ -23,6 +25,8 @@ const App = () => {
         <Route path="/teachers-group" element={<TeachersGroup />} />
         <Route path="/broadcast" element={<BroadcastPage />} />
         <Route path='/add-broadcast' element={<AddBroadcastPage />} />
+        <Route path='/classroom/:id' element={<Classroom />} />
+        <Route path='/all-classrooms' element={<AllClassrooms />} />
         
         <Route element={<PrivateRoute />} >
           <Route path="/profile" element={<Profile />} />
