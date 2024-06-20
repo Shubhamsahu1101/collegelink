@@ -1,24 +1,44 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    avatar: {
-        type: String,
-        default: "https://avatar.iran.liara.run/public"
-    },
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  avatar: {
+    type: String,
+    default: "https://avatar.iran.liara.run/public/`{gender==male?'boy':'girl'}`"
+  },
+
+  name: {
+    type: String,
+    required: true
+  },
+  instituteId: {
+    type: String,
+    required: true
+  },
+  role: {
+    type: String,
+    default: 'teacher'
+  },
+  batch: {
+    type: String,
+    required: true
+  },
+  gender: {
+    type: String,
+    required: true
+  },
+  classroomList: {
+    type: Array,
+    default: []
+  },
 }, { timestamps: true });
 
 

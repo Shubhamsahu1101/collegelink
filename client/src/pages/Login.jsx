@@ -1,14 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import toast from 'react-hot-toast'
-// import { useDispatch } from 'react-redux'
-// import { userLoggedIn } from '../redux/user/userSlice'
+import { useDispatch } from 'react-redux'
+import { userLoggedIn } from '../redux/user/userSlice'
 import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const [formData, setFormData] = React.useState({});
   const [loading, setLoading] = React.useState(false);
-  // const dispatchEvent = useDispatch();
+  const dispatchEvent = useDispatch();
   const navigate = useNavigate();
   
   const handleChange = (e) => {
@@ -39,7 +39,7 @@ const Login = () => {
       }
       else {
         toast.success('Logged in successfully');
-        // dispatchEvent(userLoggedIn(data));
+        dispatchEvent(userLoggedIn(data));
         navigate('/');
       }
 
