@@ -14,6 +14,6 @@ app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 
 app.listen(process.env.PORT, async () => {
-    await connectToMongoDB();
-    console.log(`Server is running on port ${process.env.PORT}`);
+  await connectToMongoDB();
+  console.log(`Server is running on port ${process.env.PORT}`);
 });

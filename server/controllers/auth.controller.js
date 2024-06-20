@@ -3,80 +3,131 @@ import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 export const signup = async (req, res) => {
-    try {
-        const { username, email, password } = req.body;
+  try {
+    const { name, email, password, instituteId, batch } = req.body;
 
-        // console.log(username, email, password);
+    // console.log(username, email, password);
 
-        if(!username || !email || !password){
-            return res.status(400).json({message: 'All fields are required'});
-        }
+    if (!name || !email || !password || !instituteId || !batch) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
 
-        const userExists = await User.findOne({ username });
+    const userExists = await User.findOne({ email });
 
-        if(userExists){
-            return res.status(400).json({message: 'Username is already taken'});
-        } 
+    if (userExists) {
+      return res.status(400).json({ message: 'Email is already taken' });
+    }
 
-        if(password.length < 6){
-            return res.status(400).json({message: 'Password must be at least 6 characters'});
-        }
+    if (password.length < 6) {
+      return res.status(400).json({ message: 'Password must be at least 6 characters' });
+    }
 
-        const hashedPassword = await bcryptjs.hash(password, 10);
-        const newUser = new User({ username, email, password: hashedPassword, avatar:`https://avatar.iran.liara.run/username?username=${username}` });
-        
-        // console.log("User signed up", newUser)
+    const hashedPassword = await bcryptjs.hash(password, 10);
+    const newUser = new User({
+      email,
+      password: hashedPassword,
+      name,
+      avatar: `https://avatar.iran.liara.run/username?username=${username}`,
+      instituteId,
+      batch,
+      role: 'teacher'
+    });
 
-        await newUser.save();
-        res.status(201).json(newUser);
+    // console.log("User signed up", newUser)
 
-    } catch (error) {
-        console.log(error.message);
-        res.status(500).json({ message: 'Internal Server Error' });
-    } 
+    await newUser.save();
+    res.status(201).json(newUser);
+
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+}
+
+
+export const createUser = async (req, res) => {
+  try {
+    const { name, email, password, instituteId, batch, role } = req.body;
+
+    // console.log(username, email, password);
+
+    if (!name || !email || !password || !instituteId || !batch || !role) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (user) {
+      return res.status(400).json({ message: 'Email is already taken' });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ message: 'Password must be at least 6 characters' });
+    }
+
+    const hashedPassword = await bcryptjs.hash(password, 10);
+    const newUser = new User({
+      email,
+      password: hashedPassword,
+      name,
+      avatar: `https://avatar.iran.liara.run/username?username=${username}`,
+      instituteId,
+      batch,
+      role
+    });
+
+    // console.log("User signed up", newUser)
+
+    await newUser.save();
+    return res.status(201).json(newUser);
+
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 }
 
 
 export const login = async (req, res) => {
-    try {
-        const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-        // console.log(email, password);
+    // console.log(email, password);
 
-        if(!email || !password){
-            return res.status(400).json({message: 'All fields are required'});
-        }
+    if (!email || !password) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
 
-        const userExists = await User.findOne({ email });
+    const userExists = await User.findOne({ email });
 
-        if(!userExists){
-            return res.status(400).json({message: 'User does not exist'});
-        } 
+    if (!userExists) {
+      return res.status(400).json({ message: 'User does not exist' });
+    }
 
-        const validPassword = await bcryptjs.compare(password, userExists.password);
+    const validPassword = await bcryptjs.compare(password, userExists.password);
 
-        if(!validPassword){
-            return res.status(400).json({message: 'Incorrect password'});
-        }
+    if (!validPassword) {
+      return res.status(400).json({ message: 'Incorrect password' });
+    }
 
-        // console.log("User logged in", userExists);
-        
-        const token = jwt.sign({ id: userExists._id }, process.env.JWT_SECRET);
-        return res.cookie('nextestate_token', token, { httpOnly: true }).status(200).json(userExists);
+    // console.log("User logged in", userExists);
 
-    } catch (error) {
-        console.log(error.message);
-        res.status(500).json({ message: 'Internal Server Error' });
-    } 
+    const token = jwt.sign({ id: userExists._id }, process.env.JWT_SECRET);
+    return res.cookie('edu_token', token, { httpOnly: true }).status(200).json(userExists);
+
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 }
 
 
 export const logout = (req, res) => {
-    try {
-        res.clearCookie('nextestate_token');
-        res.status(200).json({});
-    } catch (error) {
-        console.log(error.message);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
+  try {
+    res.clearCookie('edu_token');
+    res.status(200).json({});
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 }

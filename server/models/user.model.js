@@ -10,11 +10,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+
   avatar: {
     type: String,
-    default: "https://avatar.iran.liara.run/public/`{gender==male?'boy':'girl'}`"
+    default: ''
   },
-
   name: {
     type: String,
     required: true
@@ -28,10 +28,6 @@ const userSchema = new mongoose.Schema({
     default: 'teacher'
   },
   batch: {
-    type: String,
-    required: true
-  },
-  gender: {
     type: String,
     required: true
   },
