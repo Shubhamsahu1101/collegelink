@@ -44,17 +44,30 @@ const classroom = new mongoose.Schema({
     type: String,
     required: true
   },
-  teacher: {
+  teacherId: {
     type: String,
     required: true
   },
+  batch: {
+    type: String,
+    required: true
+  },
+  instituteId: {
+    type: String,
+    required: true
+  },
+  students: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: []
+  }],
 
   instructions:{
-    type: Array[classroomInstruction],
+    type: [classroomInstruction],
     default: []
   },
   assignments: {
-    type: Array[classroomAssignment],
+    type: [classroomAssignment],
     default: []
   },
 }, { timestamps: true });

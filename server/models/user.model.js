@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { mongo } from 'mongoose';
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -35,10 +35,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
-  classroomList: {
-    type: Array,
+  classroomList: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Classroom',
     default: []
-  },
+  }],
 }, { timestamps: true });
 
 
