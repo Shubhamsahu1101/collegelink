@@ -28,6 +28,11 @@ const classroomAssignment = new mongoose.Schema({
     type: String,
     default: ""
   },
+  submissions: {
+    type: Map,
+    of: String,
+    default: {}
+  }
 })
 
 const classroom = new mongoose.Schema({
