@@ -7,18 +7,6 @@ export const updateUser = async (req, res) => {
     return res.status(403).json({ message: 'Forbidden' });
   }
   try {
-    if (req.body.username) {
-      const userExists = await User.findOne({ username: req.body.username });
-      if (userExists) {
-        return res.status(400).json({ message: 'Username is already taken' });
-      }
-    }
-    if (req.body.email) {
-      const userExists = await User.findOne({ email: req.body.email });
-      if (userExists) {
-        return res.status(400).json({ message: 'Email is already taken' });
-      }
-    }
     if (req.body.password) {
       if (req.body.password.length < 6) {
         return res.status(400).json({ message: 'Password must be at least 6 characters long' });
@@ -29,8 +17,6 @@ export const updateUser = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(req.params.id,
       {
         $set: {
-          username: req.body.username,
-          email: req.body.email,
           password: req.body.password,
           avatar: req.body.avatar
         }

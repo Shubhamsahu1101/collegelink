@@ -1,14 +1,16 @@
 import User from '../models/user.model.js';
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
+
 
 export const signup = async (req, res) => {
   try {
-    const { name, email, password, instituteId, batch } = req.body;
+    const { name, email, password, instituteName } = req.body;
 
-    // console.log(username, email, password);
+    console.log(name, email, password, instituteName);
 
-    if (!name || !email || !password || !instituteId || !batch) {
+    if (!name || !email || !password || !instituteName) {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
@@ -23,17 +25,18 @@ export const signup = async (req, res) => {
     }
 
     const hashedPassword = await bcryptjs.hash(password, 10);
+    const uuid = uuidv4();
     const newUser = new User({
       email,
       password: hashedPassword,
       name,
-      avatar: `https://avatar.iran.liara.run/username?username=${username}`,
-      instituteId,
-      batch,
+      avatar: `https://avatar.iran.liara.run/username?username=${name}`,
+      instituteName,
+      instituteId: uuid,
       role: 'teacher'
     });
 
-    // console.log("User signed up", newUser)
+    console.log("User signed up", newUser)
 
     await newUser.save();
     res.status(201).json(newUser);
@@ -47,11 +50,11 @@ export const signup = async (req, res) => {
 
 export const createUser = async (req, res) => {
   try {
-    const { name, email, password, instituteId, batch, role } = req.body;
+    const { name, email, password, instituteName, instituteId, batch, role } = req.body;
 
-    // console.log(username, email, password);
+    console.log(name, email, password, instituteName, instituteId, batch, role);
 
-    if (!name || !email || !password || !instituteId || !batch || !role) {
+    if (!name || !email || !password || !instituteName || !instituteId || !role) {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
@@ -70,13 +73,14 @@ export const createUser = async (req, res) => {
       email,
       password: hashedPassword,
       name,
-      avatar: `https://avatar.iran.liara.run/username?username=${username}`,
+      avatar: `https://avatar.iran.liara.run/username?username=${name}`,
+      instituteName,
       instituteId,
       batch,
       role
     });
 
-    // console.log("User signed up", newUser)
+    console.log("User created", newUser)
 
     await newUser.save();
     return res.status(201).json(newUser);

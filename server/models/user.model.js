@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  instituteName: {
+    type: String,
+    required: true
+  },
   instituteId: {
     type: String,
     required: true
@@ -29,7 +33,7 @@ const userSchema = new mongoose.Schema({
   },
   batch: {
     type: String,
-    required: true
+    default: ''
   },
   classroomList: {
     type: Array,
