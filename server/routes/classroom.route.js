@@ -6,18 +6,18 @@ const router = express.Router();
 
 router.post('/create', verifyToken, createClassroom);
 
-router.get('/getAssignments/:classroomId', verifyToken, getAssignments);
+router.get('/get-assignments/:classroomId', verifyToken, getAssignments);
 
-router.get('/getInstructions/:classroomId', verifyToken, getInstructions);
+router.get('/get-instructions/:classroomId', verifyToken, getInstructions);
 
-router.get('/getSubmissions/:classroomId', verifyToken, getSubmissions);
+router.get('/get-submissions/:classroomId', verifyToken, getSubmissions);
 
-router.post('/addInstruction/:classroomId', verifyToken, addInstruction);
+router.post('/add-instruction/:classroomId', verifyToken, addInstruction);
 
-router.post('/addAssignment/:classroomId', verifyToken, addAssignment);
+router.post('/add-assignment/:classroomId', verifyToken, addAssignment);
 
-router.post('/addStudent/:classroomId', verifyToken, addStudent);
+router.post('/add-student/:classroomId', verifyToken, addStudent);
 
-router.post('/submitAssignment/:classroomId', verifyToken, submitAssignment);
+router.post('/submit-assignment/:classroomId', verifyToken, submitAssignment);
 
 export default router;
