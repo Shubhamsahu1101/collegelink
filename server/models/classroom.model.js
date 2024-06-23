@@ -48,6 +48,10 @@ const classroom = new mongoose.Schema({
     type: String,
     required: true
   },
+  teacherName: {
+    type: String,
+    required: true
+  },
   batch: {
     type: String,
     required: true

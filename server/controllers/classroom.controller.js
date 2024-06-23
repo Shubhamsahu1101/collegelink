@@ -11,12 +11,6 @@ export const createClassroom = async (req, res) => {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
-    const classroomExists = await Classroom.findOne({ name });
-
-    if (classroomExists) {
-      return res.status(400).json({ message: 'Classroom already exists' });
-    }
-
     const newClassroom = new Classroom({
       name,
       instituteId,
@@ -24,6 +18,10 @@ export const createClassroom = async (req, res) => {
       batch,
       subject
     });
+
+    const user = await User.findById(teacherId);
+    user.classroomList.push(newClassroom._id);
+    await user.save();
 
     console.log("Classroom created", newClassroom)
 
@@ -67,7 +65,7 @@ export const addStudent = async (req, res) => {
 export const getAssignments = async (req, res) => {
   try {
     const classroomId = req.params.classroomId;
-    const classroom = await Classroom.findById(classroomId).populate('assignments');
+    const classroom = await Classroom.findById(classroomId);
     if (classroom) {
       res.status(200).json(classroom.assignments);
     } else {
@@ -84,7 +82,7 @@ export const getAssignments = async (req, res) => {
 export const getInstructions = async (req, res) => {
   try {
     const classroomId = req.params.classroomId;
-    const classroom = await Classroom.findById(classroomId).populate('instructions');
+    const classroom = await Classroom.findById(classroomId);
     if (classroom) {
       res.status(200).json(classroom.instructions);
     } else {
@@ -207,6 +205,48 @@ export const submitAssignment = async (req, res) => {
       res.status(404).json({ message: 'Classroom not found' });
     }
   } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+}
+
+export const getUserClassrooms = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const user = await User.findById(userId).populate({
+      path: 'classroomList',
+      select: 'name subject teacherName'
+    });
+    res.status(200).json(user.classroomList);
+  }
+  catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+}
+
+export const getClassrooms = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    const instituteId = user.instituteId;
+    const batch = user.batch;
+    const classrooms = await Classroom.find({ instituteId, batch }).select('name subject teacherName');
+    
+    res.status(200).json(classrooms);
+  }
+  catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+}
+
+export const getClassroom = async (req, res) => {
+  try {
+    const classroomId = req.params.classroomId;
+    const classroom = await Classroom.findById(classroomId);
+    res.status(200).json(classroom);
+  }
+  catch (error) {
     console.log(error.message);
     res.status(500).json({ message: 'Internal Server Error' });
   }
