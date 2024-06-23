@@ -10,7 +10,7 @@ router.get('/getAssignments/:classroomId', verifyToken, getAssignments);
 
 router.get('/getInstructions/:classroomId', verifyToken, getInstructions);
 
-router.get('/getSubmissions/:classroomId/:assignmentId', verifyToken, getSubmissions);
+router.get('/getSubmissions/:classroomId', verifyToken, getSubmissions);
 
 router.post('/addInstruction/:classroomId', verifyToken, addInstruction);
 

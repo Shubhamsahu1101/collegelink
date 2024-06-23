@@ -101,7 +101,7 @@ export const getInstructions = async (req, res) => {
 export const getSubmissions = async (req, res) => {
   try {
     const classroomId = req.params.classroomId;
-    const assignmentId = req.params.assignmentId;
+    const assignmentId = req.body.assignmentId;
     const classroom = await Classroom.findById(classroomId).populate('assignments');
     if (classroom) {
       const assignment = classroom.assignments.id(assignmentId);
@@ -185,7 +185,7 @@ export const addAssignment = async (req, res) => {
 export const submitAssignment = async (req, res) => {
   try {
     const { userId, assignmentId, documentLink } = req.body;
-    const classroomId = req.params.id;
+    const classroomId = req.params.classroomId;
     const classroom = await Classroom.findById(classroomId);
     if (classroom) {
       
