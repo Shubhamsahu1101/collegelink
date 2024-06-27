@@ -1,9 +1,31 @@
 import React from 'react'
 import ClassroomCard from '../components/ClassroomCard'
 import { Link } from 'react-router-dom'
-
+import { useSelector } from 'react-redux'
 
 const Home = () => {
+  const { currentUser } = useSelector((state) => state.user);
+  const [loading, setLoading] = React.useState(false);
+  const [userClassrooms, setUserClassrooms] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchClassrooms = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch('/api/classroom/get-user-classrooms');
+        const data = await res.json();
+        setUserClassrooms(data);
+      } catch (error) {
+        console.log(error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchClassrooms();
+  }, [currentUser])
+
+  console.log(userClassrooms)
   return (
 
     <div className="h-[calc(100vh-70px)] bg-gray-100">
@@ -44,11 +66,11 @@ const Home = () => {
             <div className="p-4 bg-white shadow rounded-lg mb-6">
               <p>Pending Assignments: None</p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              <ClassroomCard classroomName="Math 101" teacherName="Mr. Smith" />
-              <ClassroomCard classroomName="Biology 202" teacherName="Dr. Johnson" />
-              <ClassroomCard classroomName="History 303" teacherName="Mrs. Lee" />
-              <ClassroomCard classroomName="Art 404" teacherName="Ms. Gonzalez" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {loading && <p>Loading...</p>}
+              {userClassrooms.map((classroom) => (
+                <ClassroomCard key={classroom._id} classroomId={classroom._id} classroomName={classroom.name} subject={classroom.subject} teacherName={classroom.teacherName}/>
+              ))}
             </div>
           </section>
         </main>
