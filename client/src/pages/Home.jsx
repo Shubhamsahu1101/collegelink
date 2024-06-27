@@ -2,6 +2,7 @@ import React from 'react'
 import ClassroomCard from '../components/ClassroomCard'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import toast from 'react-hot-toast'
 
 const Home = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -12,11 +13,21 @@ const Home = () => {
     const fetchClassrooms = async () => {
       try {
         setLoading(true);
+
         const res = await fetch('/api/classroom/get-user-classrooms');
         const data = await res.json();
-        setUserClassrooms(data);
+
+        if(data.message) {
+          toast.error(data.message);
+        }
+        else {
+          toast.success('Classrooms fetched successfully');
+          setUserClassrooms(data);
+        }
+
       } catch (error) {
         console.log(error.message);
+        toast.success('Failed to fetch classroom data');
       } finally {
         setLoading(false);
       }

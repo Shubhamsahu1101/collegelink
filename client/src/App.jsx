@@ -7,7 +7,7 @@ import SignUp from './pages/SignUp'
 import Login from './pages/Login'
 import Header from './components/Navbar'
 import { Toaster } from 'react-hot-toast'
-import PrivateRoute from './components/PrivateRoute'
+import Validator from './components/Validator'
 import TeachersGroup from './pages/TeachersGroup'
 import BroadcastPage from './pages/Broadcast'
 import AddBroadcastPage from './pages/AddBroadcast'
@@ -25,10 +25,10 @@ const App = () => {
         <Route path="/teachers-group" element={<TeachersGroup />} />
         <Route path="/broadcast" element={<BroadcastPage />} />
         <Route path='/add-broadcast' element={<AddBroadcastPage />} />
-        <Route path='/classroom/:id' element={<Classroom />} />
-        <Route path='/all-classrooms' element={<AllClassrooms />} />
         
-        <Route element={<PrivateRoute />} >
+        <Route element={<Validator />} >
+          <Route path='/classroom/:classroomId' element={<Classroom />} />
+          <Route path='/all-classrooms' element={<AllClassrooms />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
 

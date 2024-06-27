@@ -229,8 +229,11 @@ export const getClassrooms = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     const instituteId = user.instituteId;
-    const batch = user.batch;
-    const classrooms = await Classroom.find({ instituteId, batch }).select('name subject teacherName');
+    const query = { instituteId };
+    if(user.role !== 'teacher') {
+      query.batch = user.batch;
+    }
+    const classrooms = await Classroom.find(query).select('name subject teacherName');
     
     res.status(200).json(classrooms);
   }
