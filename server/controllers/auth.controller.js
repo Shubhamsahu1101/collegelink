@@ -96,7 +96,7 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // console.log(email, password);
+    console.log(email, password);
 
     if (!email || !password) {
       return res.status(400).json({ message: 'All fields are required' });
@@ -114,7 +114,7 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: 'Incorrect password' });
     }
 
-    // console.log("User logged in", userExists);
+    console.log("User logged in", userExists);
 
     const token = jwt.sign({ id: userExists._id }, process.env.JWT_SECRET);
     return res.cookie('edu_token', token, { httpOnly: true }).status(200).json(userExists);
