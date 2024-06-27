@@ -3,7 +3,7 @@ import User from '../models/user.model.js';
 
 
 export const updateUser = async (req, res) => {
-  if (req.user.id !== req.params.id) {
+  if (req.user.id !== req.params.userId) {
     return res.status(403).json({ message: 'Forbidden' });
   }
   try {
@@ -14,7 +14,7 @@ export const updateUser = async (req, res) => {
       req.body.password = bcryptjs.hashSync(req.body.password, 10);
     }
 
-    const updatedUser = await User.findByIdAndUpdate(req.params.id,
+    const updatedUser = await User.findByIdAndUpdate(req.user.id,
       {
         $set: {
           password: req.body.password,
