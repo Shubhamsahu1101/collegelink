@@ -128,7 +128,6 @@ const ClassroomPage = () => {
   const params = useParams();
 
   useEffect(() => {
-    setLoading(true);
     const fetchClassroomData = async () => {
       try {
         setLoading(true);
@@ -192,11 +191,9 @@ const ClassroomPage = () => {
                     <img src={arrowSvg} alt="arrow" width={20} height={20} className={`${expandedId === assignment._id ? 'rotate-180' : ''}`} />
                   </div>
                 </div>
-                {expandedId === assignment._id && (
-                  <div className="mt-2 text-gray-700 bg-gray-50 p-3 rounded-lg shadow-inner transition-all duration-300 ease-in-out overflow-hidden max-h-screen opacity-100">
-                    {assignment.description}
-                  </div>
-                )}
+                <div className={`mt-2 text-gray-700 bg-gray-50 rounded-lg shadow-inner transition-all duration-500 ease-in-out overflow-hidden ${expandedId === assignment._id ? 'max-h-screen opacity-100 p-3' : 'max-h-0 opacity-0'}`}>
+                  {assignment.description}
+                </div>
               </div>
             ))}
           </section>

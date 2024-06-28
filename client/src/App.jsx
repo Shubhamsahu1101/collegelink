@@ -9,7 +9,7 @@ import Header from './components/Navbar'
 import { Toaster } from 'react-hot-toast'
 import Validator from './components/Validator'
 import TeachersGroup from './pages/TeachersGroup'
-import BroadcastPage from './pages/Broadcast'
+import Broadcasts from './pages/Broadcasts'
 import AddBroadcastPage from './pages/AddBroadcast'
 import Classroom from './pages/Classroom'
 import AllClassrooms from './pages/AllClassrooms'
@@ -23,7 +23,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/teachers-group" element={<TeachersGroup />} />
-        <Route path="/broadcast" element={<BroadcastPage />} />
+        <Route path="/broadcast" element={<Broadcasts />} />
         <Route path='/add-broadcast' element={<AddBroadcastPage />} />
         
         <Route element={<Validator />} >

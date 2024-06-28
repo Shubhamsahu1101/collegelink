@@ -1,22 +1,41 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import toast from 'react-hot-toast';
 const AddBroadcastPage = () => {
-  const [sender, setSender] = useState('');
-  const [subject, setSubject] = useState('');
-  const [message, setMessage] = useState('');
+  const [formData, setFormData] = useState('');
+  const [loading , setLoading] = useState(false);
 
-  const handleAddBroadcast = () => {
-    const newBroadcast = {
-      id: Date.now(),
-      sender,
-      subject,
-      message,
-    };
-    console.log('Broadcast added:', newBroadcast);
-    setSender('');
-    setSubject('');
-    setMessage('');
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleAddBroadcast = async () => {
+    try {
+      setLoading(true);
+
+      const res = await fetch('http://localhost:5004/broadcasts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+
+      if (data.message) {
+        toast.error(data.message);
+      }
+      else {
+        toast.success('Broadcast sent successfully');
+        setFormData('');
+      }
+
+    } catch (error) {
+      console.log(error.message);
+      toast.error('Failed to send broadcast, Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -34,23 +53,20 @@ const AddBroadcastPage = () => {
           <div className="mb-4">
             <input
               type="text"
-              placeholder="Subject"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
+              placeholder="subject"
+              id='subject'
+              onChange={(e) => handleChange(e.target.value)}
               className="w-full p-3 rounded-lg border shadow-md mb-2"
             />
             <textarea
-              placeholder="Message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              placeholder="message"
+              id='message'
+              onChange={(e) => handleChange(e.target.value)}
               className="w-full p-3 rounded-lg border shadow-md mb-2"
               rows="5"
             ></textarea>
           </div>
-          <button
-            onClick={handleAddBroadcast}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg"
-          >
+          <button onClick={handleAddBroadcast} className="px-4 py-2 bg-blue-500 text-white rounded-lg">
             Send Broadcast
           </button>
         </div>

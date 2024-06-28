@@ -57,9 +57,9 @@ const AllClassrooms = () => {
         <Link to="/all-classrooms" className="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium text-lg">Classrooms</Link>
       </nav>
     </aside>
-      <div className="flex-1 flex flex-col mx-8 p-6 mt-4">
+      <div className="flex-1 flex flex-col p-6">
         <h1 className="text-2xl font-bold mb-6">Available Classrooms</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {loading && <p>Loading...</p>}
           {classrooms.length === 0 && <p>No classrooms available</p>}
           {classrooms.map((classroom) => (
